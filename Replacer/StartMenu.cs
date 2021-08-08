@@ -76,6 +76,7 @@ namespace Replacer
                         {
                             text = text.Replace("  ", " ");
                         }
+                        text = text.Trim();
                         File.Delete(_files[i]);
                         using (StreamWriter stream = new StreamWriter(File.OpenWrite(_files[i])))
                         {
