@@ -165,5 +165,22 @@ namespace Replacer
         {
             _path = textBoxShowPath.Text;
         }
+
+        private void buttonReplace_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxInputReplace_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (textBoxInputReplace.SelectedTab.Text == "Удаление")
+            {
+                labelExample.Text = "Пример: слово1,слово2,слово3,слово4,слово5";
+            }
+            else if (textBoxInputReplace.SelectedTab.Text == "Замена")
+            {
+                labelExample.Text = "Пример: слово1=слово2,слово3=слово4,слово5=слово6";
+            }
+        }
     }
 }
