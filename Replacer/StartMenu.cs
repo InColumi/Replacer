@@ -15,13 +15,11 @@ namespace Replacer
     {
         private string _path;
         private List<string> _files;
-        private List<string> _fileNames;
 
         public StartMenu()
         {
             _path = string.Empty;
             _files = new List<string>();
-            _fileNames = new List<string>();
             InitializeComponent();
         }
 
@@ -30,42 +28,15 @@ namespace Replacer
             _path = GetDirectory();
             if (_path != string.Empty)
             {
-                SetFiles();
-                textBoxShowPath.Text = _path;
-                SetNameFiles();
-            }
-        }
-
-        private void ClearVariable()
-        {
-            _path = string.Empty;
-            _files.Clear();
-            _fileNames.Clear();
-        }
-
-        private void ClearInterface()
-        {
-            textBoxShowPath.Clear();
-            textBoxInputDelete.Clear();
-            listBoxChanges.Items.Clear();
-        }
-
-        private void SetNameFiles()
-        {
-            DirectoryInfo directoryInfo = new DirectoryInfo(_path);
-            var files = directoryInfo.GetFiles("*.txt");
-            foreach (var file in files)
-            {
-                _fileNames.Add(file.Name);
-            }
-        }
-
-        private void SetFiles()
-        {
-            _files = Directory.GetFiles(_path, "*.txt").ToList<string>();
-            if (_files.Count == 0)
-            {
-                MessageBox.Show($"Файлов с расширением txt в папке {_path} - нет.");
+                _files = Directory.GetFiles(_path, "*.txt").ToList<string>();
+                if (_files.Count == 0)
+                {
+                    MessageBox.Show($"Файлов с расширением txt в папке {_path} - нет.");
+                }
+                else
+                {
+                    textBoxShowPath.Text = _path;
+                }
             }
         }
 
@@ -85,35 +56,21 @@ namespace Replacer
             }
         }
 
-        private string DeleteWord(string word, string text)
+        private void ReplaceFiles(string wordOld, string wordNew)
         {
-            return text.Replace(word, string.Empty);
-        }
-
-        private string ReplaceWord(string word, string text)
-        {
-            string[] forRaplace = word.Split('#');
-            return text.Replace(forRaplace[0], forRaplace[1]);
-        }
-
-        private void ReplaceFiles(List<string> words, Func<string, string, string> func)
-        {
-            listBoxChanges.Items.Clear();
-            bool isContains = false;
+            bool isReplaced = false;
             for (int i = 0; i < _files.Count; i++)
             {
                 string text = File.ReadAllText(_files[i]);
                 if (text != string.Empty)
                 {
-                    foreach (var word in words)
+                    if (text.Contains(wordOld))
                     {
-                        if (text.Contains(word.Split('#')[0]))
-                        {
-                            text = func(word, text);
-                            isContains = true;
-                        }
+                        text = text.Replace(wordOld, wordNew);
+                        isReplaced = true;
                     }
-                    if (isContains)
+
+                    if (isReplaced)
                     {
                         while (text.Contains("  "))
                         {
@@ -124,9 +81,7 @@ namespace Replacer
                         {
                             stream.WriteAsync(text).Wait();
                         }
-
-                        listBoxChanges.Items.Add(_fileNames[i]);
-                        isContains = false;
+                        isReplaced = false;
                     }
                 }
             }
@@ -136,23 +91,10 @@ namespace Replacer
         {
             if (_path != string.Empty && _files.Count != 0)
             {
-                List<string> words;
-                if (tabControl.SelectedTab.Text == "Удаление")
-                {
-                    words = textBoxInputDelete.Text.Split(',').ToList<string>();
-                    ReplaceFiles(words, DeleteWord);
-                    words.Remove("");
-                }
-                else if (tabControl.SelectedTab.Text == "Замена")
-                {
-                    words = textBoxInputReplace.Text.Split(',').ToList<string>();
-                    words.Remove("");
-                    ReplaceFiles(words, ReplaceWord);
-                }
-                else
-                {
-                    throw new Exception("Check tabContol");
-                }
+                string wordNew = textBoxInputNew.Text;
+                string wordOld = textBoxInputOld.Text;
+                ReplaceFiles(wordOld, wordNew);
+                labelDone.Visible = true;
             }
             else if (Directory.Exists(_path) == false)
             {
@@ -166,7 +108,6 @@ namespace Replacer
 
         private void buttonBrowser_Click(object sender, EventArgs e)
         {
-            ClearVariable();
             Initialize();
         }
 
@@ -185,16 +126,9 @@ namespace Replacer
             SplitAndReplace();
         }
 
-        private void textBoxInputReplace_SelectedIndexChanged(object sender, EventArgs e)
+        private void textBoxInputOld_TextChanged(object sender, EventArgs e)
         {
-            if (tabControl.SelectedTab.Text == "Удаление")
-            {
-                labelExample.Text = "Пример: слово1,слово2,слово3,слово4,слово5";
-            }
-            else if (tabControl.SelectedTab.Text == "Замена")
-            {
-                labelExample.Text = "Пример: слово1#слово2,слово3#слово4,слово5#слово6";
-            }
+            labelDone.Visible = false;
         }
     }
 }
