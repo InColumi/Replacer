@@ -31,7 +31,7 @@ namespace Replacer
             if (_path != string.Empty)
             {
                 SetFiles();
-                textBoxShowPath.Text =  _path;
+                textBoxShowPath.Text = _path;
                 SetNameFiles();
             }
         }
@@ -85,7 +85,18 @@ namespace Replacer
             }
         }
 
-        private void ReplaceFiles(List<string> words)
+        private string DeleteWord(string word, string text)
+        {
+            return text.Replace(word, string.Empty);
+        }
+
+        private string ReplaceWord(string word, string text)
+        {
+            string[] forRaplace = word.Split('#');
+            return text.Replace(forRaplace[0], forRaplace[1]);
+        }
+
+        private void ReplaceFiles(List<string> words, Func<string, string, string> func)
         {
             listBoxChanges.Items.Clear();
             bool isContains = false;
@@ -96,9 +107,9 @@ namespace Replacer
                 {
                     foreach (var word in words)
                     {
-                        if (text.Contains(word))
+                        if (text.Contains(word.Split('#')[0]))
                         {
-                            text = text.Replace(word, string.Empty);
+                            text = func(word, text);
                             isContains = true;
                         }
                     }
@@ -113,7 +124,7 @@ namespace Replacer
                         {
                             stream.WriteAsync(text).Wait();
                         }
-                        
+
                         listBoxChanges.Items.Add(_fileNames[i]);
                         isContains = false;
                     }
@@ -125,15 +136,18 @@ namespace Replacer
         {
             if (_path != string.Empty && _files.Count != 0)
             {
-                List<string> words = textBoxInputDelete.Text.Split(',').ToList<string>();
-                words.Remove("");
-                if (textBoxInputReplace.SelectedTab.Text == "Удаление")
+                List<string> words;
+                if (tabControl.SelectedTab.Text == "Удаление")
                 {
-                    ReplaceFiles(words);
+                    words = textBoxInputDelete.Text.Split(',').ToList<string>();
+                    ReplaceFiles(words, DeleteWord);
+                    words.Remove("");
                 }
-                else if (textBoxInputReplace.SelectedTab.Text == "Замена")
+                else if (tabControl.SelectedTab.Text == "Замена")
                 {
-                    ReplaceFiles(words);
+                    words = textBoxInputReplace.Text.Split(',').ToList<string>();
+                    words.Remove("");
+                    ReplaceFiles(words, ReplaceWord);
                 }
                 else
                 {
@@ -168,18 +182,18 @@ namespace Replacer
 
         private void buttonReplace_Click(object sender, EventArgs e)
         {
-
+            SplitAndReplace();
         }
 
         private void textBoxInputReplace_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (textBoxInputReplace.SelectedTab.Text == "Удаление")
+            if (tabControl.SelectedTab.Text == "Удаление")
             {
                 labelExample.Text = "Пример: слово1,слово2,слово3,слово4,слово5";
             }
-            else if (textBoxInputReplace.SelectedTab.Text == "Замена")
+            else if (tabControl.SelectedTab.Text == "Замена")
             {
-                labelExample.Text = "Пример: слово1=слово2,слово3=слово4,слово5=слово6";
+                labelExample.Text = "Пример: слово1#слово2,слово3#слово4,слово5#слово6";
             }
         }
     }

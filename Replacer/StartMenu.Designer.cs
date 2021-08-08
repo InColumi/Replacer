@@ -29,7 +29,8 @@ namespace Replacer
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBoxInputReplace = new System.Windows.Forms.TabControl();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartMenu));
+            this.tabControl = new System.Windows.Forms.TabControl();
             this.Delete = new System.Windows.Forms.TabPage();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -37,32 +38,32 @@ namespace Replacer
             this.Replace = new System.Windows.Forms.TabPage();
             this.buttonReplace = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBoxInputReplace = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.listBoxChanges = new System.Windows.Forms.ListBox();
             this.textBoxShowPath = new System.Windows.Forms.TextBox();
             this.buttonBrowser = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.labelExample = new System.Windows.Forms.Label();
-            this.textBoxInputReplace.SuspendLayout();
+            this.tabControl.SuspendLayout();
             this.Delete.SuspendLayout();
             this.Replace.SuspendLayout();
             this.SuspendLayout();
             // 
-            // textBoxInputReplace
+            // tabControl
             // 
-            this.textBoxInputReplace.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxInputReplace.Controls.Add(this.Delete);
-            this.textBoxInputReplace.Controls.Add(this.Replace);
-            this.textBoxInputReplace.Location = new System.Drawing.Point(8, 45);
-            this.textBoxInputReplace.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBoxInputReplace.Name = "textBoxInputReplace";
-            this.textBoxInputReplace.SelectedIndex = 0;
-            this.textBoxInputReplace.Size = new System.Drawing.Size(426, 403);
-            this.textBoxInputReplace.TabIndex = 0;
-            this.textBoxInputReplace.SelectedIndexChanged += new System.EventHandler(this.textBoxInputReplace_SelectedIndexChanged);
+            this.tabControl.Controls.Add(this.Delete);
+            this.tabControl.Controls.Add(this.Replace);
+            this.tabControl.Location = new System.Drawing.Point(19, 45);
+            this.tabControl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(426, 403);
+            this.tabControl.TabIndex = 0;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.textBoxInputReplace_SelectedIndexChanged);
             // 
             // Delete
             // 
@@ -115,16 +116,16 @@ namespace Replacer
             this.textBoxInputDelete.Location = new System.Drawing.Point(4, 27);
             this.textBoxInputDelete.Multiline = true;
             this.textBoxInputDelete.Name = "textBoxInputDelete";
+            this.textBoxInputDelete.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxInputDelete.Size = new System.Drawing.Size(409, 301);
             this.textBoxInputDelete.TabIndex = 0;
-            this.textBoxInputDelete.Text = "Учёба,Привет мир,пройдет,Рождественская коллекция";
             // 
             // Replace
             // 
             this.Replace.BackColor = System.Drawing.Color.AliceBlue;
             this.Replace.Controls.Add(this.buttonReplace);
             this.Replace.Controls.Add(this.label3);
-            this.Replace.Controls.Add(this.textBox2);
+            this.Replace.Controls.Add(this.textBoxInputReplace);
             this.Replace.Location = new System.Drawing.Point(4, 27);
             this.Replace.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Replace.Name = "Replace";
@@ -161,19 +162,19 @@ namespace Replacer
             this.label3.TabIndex = 3;
             this.label3.Text = "Введите слова/словосочетания/ссылки(через запятую):";
             // 
-            // textBox2
+            // textBoxInputReplace
             // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.textBoxInputReplace.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.BackColor = System.Drawing.SystemColors.Info;
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox2.Location = new System.Drawing.Point(4, 27);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(409, 301);
-            this.textBox2.TabIndex = 2;
+            this.textBoxInputReplace.BackColor = System.Drawing.SystemColors.Info;
+            this.textBoxInputReplace.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxInputReplace.Location = new System.Drawing.Point(4, 27);
+            this.textBoxInputReplace.Multiline = true;
+            this.textBoxInputReplace.Name = "textBoxInputReplace";
+            this.textBoxInputReplace.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxInputReplace.Size = new System.Drawing.Size(409, 301);
+            this.textBoxInputReplace.TabIndex = 2;
             // 
             // label4
             // 
@@ -195,7 +196,7 @@ namespace Replacer
             this.listBoxChanges.FormattingEnabled = true;
             this.listBoxChanges.HorizontalScrollbar = true;
             this.listBoxChanges.ItemHeight = 15;
-            this.listBoxChanges.Location = new System.Drawing.Point(437, 99);
+            this.listBoxChanges.Location = new System.Drawing.Point(448, 99);
             this.listBoxChanges.Name = "listBoxChanges";
             this.listBoxChanges.ScrollAlwaysVisible = true;
             this.listBoxChanges.SelectionMode = System.Windows.Forms.SelectionMode.None;
@@ -262,14 +263,15 @@ namespace Replacer
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonBrowser);
             this.Controls.Add(this.textBoxShowPath);
-            this.Controls.Add(this.textBoxInputReplace);
+            this.Controls.Add(this.tabControl);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "StartMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Replacer";
-            this.textBoxInputReplace.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
             this.Delete.ResumeLayout(false);
             this.Delete.PerformLayout();
             this.Replace.ResumeLayout(false);
@@ -281,7 +283,7 @@ namespace Replacer
 
         #endregion
 
-        private System.Windows.Forms.TabControl textBoxInputReplace;
+        private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage Delete;
         private System.Windows.Forms.TabPage Replace;
         private System.Windows.Forms.TextBox textBoxShowPath;
@@ -289,7 +291,7 @@ namespace Replacer
         private System.Windows.Forms.TextBox textBoxInputDelete;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBoxInputReplace;
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ListBox listBoxChanges;
